@@ -1,8 +1,9 @@
 import discord
 from discord.ext import commands
-import token
 
 bot = commands.Bot(command_prefix="!")
+
+token = "OTI3NzQwODYwMDY0NDY5MDQz.YdOoAQ.zcd_aSj5JGiiMR3nKk_VQ9IsoLI"
 
 
 @bot.event
