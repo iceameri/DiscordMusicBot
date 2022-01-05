@@ -12,6 +12,7 @@ import os
 # 기본 명령어 앞에 !사용
 bot = commands.Bot(command_prefix="!")
 
+token = os.environ['token']
 
 user = []  # 유저가 입력한 노래정보
 musictitle = []  # 가공된 정보의 노래 제목
@@ -197,8 +198,6 @@ async def on_ready():
     print("Bot Initiating")
     print(bot.user.name)
     print("connetion was succesful")
-
-    token = os.getenv("token")
 
     await bot.change_presence(
         # 음악연구 + "하는 중"이 자동으로 붙음
