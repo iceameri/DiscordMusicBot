@@ -5,7 +5,7 @@ pip
 beautifulsoup4
 youtube-dl
 ffmpeg-python
-requets
+requests
 lxml
 urllib3
 Options
