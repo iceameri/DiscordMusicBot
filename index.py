@@ -12,7 +12,7 @@ import os
 # 기본 명령어 앞에 !사용
 bot = commands.Bot(command_prefix="!")
 
-token = os.environ['token']
+token = os.environ.get("token")
 
 user = []  # 유저가 입력한 노래정보
 musictitle = []  # 가공된 정보의 노래 제목
