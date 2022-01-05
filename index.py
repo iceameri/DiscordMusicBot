@@ -13,6 +13,171 @@ bot = commands.Bot(command_prefix="!")
 
 token = "OTI3NzQwODYwMDY0NDY5MDQz.YdOoAQ.zcd_aSj5JGiiMR3nKk_VQ9IsoLI"
 
+user = []  # 유저가 입력한 노래정보
+musictitle = []  # 가공된 정보의 노래 제목
+song_queue = []  # 가공된 정보의 노래 링크
+musicnow = []  # 현재 출력되는 노래배열
+
+
+def title(msg):
+    global music
+
+    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
+    FFMPEG_OPTIONS = {
+        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
+        "options": "-vn",
+    }
+
+    options = webdriver.ChromeOptions()
+    options.add_argument("headless")
+
+    chromedriver_dir = "chromedriver.exe"
+
+    driver = webdriver.Chrome(chromedriver_dir, options=options)
+    driver.get("https://www.youtube.com/results?search_query=" + msg + "+lyrics")
+    source = driver.page_source
+    bs = bs4.BeautifulSoup(source, "lxml")
+    entire = bs.find_all("a", {"id": "video-title"})
+    entireNum = entire[0]
+    music = entireNum.text.strip()
+
+    musictitle.append(music)
+    musicnow.append(music)
+    test1 = entireNum.get("href")
+    url = "https://www.youtube.com" + test1
+    with YoutubeDL(YDL_OPTIONS) as ydl:
+        info = ydl.extract_info(url, download=False)
+    URL = info["formats"][0]["url"]
+
+    driver.quit()
+
+    return music, URL
+
+
+def play(ctx):
+    global vc
+    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
+    FFMPEG_OPTIONS = {
+        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
+        "options": "-vn",
+    }
+    URL = song_queue[0]
+    del user[0]
+    del musictitle[0]
+    del song_queue[0]
+    vc = get(bot.voice_clients, guild=ctx.guild)
+    if not vc.is_playing():
+        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS), after=lambda e: play_next(ctx))
+
+
+def play_next(ctx):
+    if len(musicnow) - len(user) >= 2:
+        for i in range(len(musicnow) - len(user) - 1):
+            del musicnow[0]
+    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
+    FFMPEG_OPTIONS = {
+        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
+        "options": "-vn",
+    }
+    if len(user) >= 1:
+        if not vc.is_playing():
+            del musicnow[0]
+            URL = song_queue[0]
+            del user[0]
+            del musictitle[0]
+            del song_queue[0]
+            vc.play(
+                discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS),
+                after=lambda e: play_next(ctx),
+            )
+
+
+@bot.command()
+async def 대기열추가(ctx, *, msg):
+    user.append(msg)
+    result, URLTEST = title(msg)
+    song_queue.append(URLTEST)
+    await ctx.send(result + "를 재생목록에 추가했어요!")
+
+
+@bot.command()
+async def 대기열삭제(ctx, *, number):
+    try:
+        ex = len(musicnow) - len(user)
+        del user[int(number) - 1]
+        del musictitle[int(number) - 1]
+        del song_queue[int(number) - 1]
+        del musicnow[int(number) - 1 + ex]
+
+        await ctx.send("대기열이 정상적으로 삭제되었습니다.")
+    except:
+        if len(list) == 0:
+            await ctx.send("대기열에 노래가 없어 삭제할 수 없어요!")
+        else:
+            if len(list) < int(number):
+                await ctx.send("숫자의 범위가 목록개수를 벗어났습니다!")
+            else:
+                await ctx.send("숫자를 입력해주세요!")
+
+
+@bot.command()
+async def 목록(ctx):
+    if len(musictitle) == 0:
+        await ctx.send("아직 아무노래도 등록하지 않았어요.")
+    else:
+        global Text
+        Text = ""
+        for i in range(len(musictitle)):
+            Text = Text + "\n" + str(i + 1) + ". " + str(musictitle[i])
+
+        await ctx.send(
+            embed=discord.Embed(title="노래목록", description=Text.strip(), color=0x00FF00)
+        )
+
+
+@bot.command()
+async def 목록초기화(ctx):
+    try:
+        ex = len(musicnow) - len(user)
+        del user[:]
+        del musictitle[:]
+        del song_queue[:]
+        while True:
+            try:
+                del musicnow[ex]
+            except:
+                break
+        await ctx.send(
+            embed=discord.Embed(
+                title="목록초기화",
+                description="""목록이 정상적으로 초기화되었습니다. 이제 노래를 등록해볼까요?""",
+                color=0x00FF00,
+            )
+        )
+    except:
+        await ctx.send("아직 아무노래도 등록하지 않았어요.")
+
+
+@bot.command()
+async def 목록재생(ctx):
+
+    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
+    FFMPEG_OPTIONS = {
+        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
+        "options": "-vn",
+    }
+
+    if len(user) == 0:
+        await ctx.send("아직 아무노래도 등록하지 않았어요.")
+    else:
+        if len(musicnow) - len(user) >= 1:
+            for i in range(len(musicnow) - len(user)):
+                del musicnow[0]
+        if not vc.is_playing():
+            play(ctx)
+        else:
+            await ctx.send("노래가 이미 재생되고 있어요!")
+
 
 @bot.event
 async def on_ready():
@@ -47,7 +212,7 @@ async def out(ctx):
 
 
 @bot.command()
-async def play(ctx, *, url):
+async def url(ctx, *, url):
     YDL_OPRIONS = {"format": "bestaudio", "noplaylist": "True"}
     FFMPEG_OPRIONS = {
         "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5"
