@@ -1,5 +1,5 @@
 asyncio
-selenum
+selenium
 discord.py[voice]
 pip
 beautifulsoup4
