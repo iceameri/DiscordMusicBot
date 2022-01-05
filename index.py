@@ -1,6 +1,14 @@
 import discord
 from discord.ext import commands
+from youtube_dl import YoutubeDL
+import time, asyncio
+import bs4
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from discord.utils import get
+from discord import FFmpegPCMAudio
 
+# 기본 명령어 앞에 !사용
 bot = commands.Bot(command_prefix="!")
 
 token = "OTI3NzQwODYwMDY0NDY5MDQz.YdOoAQ.zcd_aSj5JGiiMR3nKk_VQ9IsoLI"
@@ -32,6 +40,27 @@ async def out(ctx):
         await vc.disconnect()
     except:
         await ctx.send("It is not belonging this channel")
+
+
+@bot.command()
+async def play(ctx, *, url):
+    YDL_OPRIONS = {"format": "bestaudio", "noplaylist": "True"}
+    FFMPEG_OPRIONS = {
+        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5"
+    }
+
+    if not vc.is_playing():
+        with YoutubeDL(YDL_OPRIONS) as tdl:
+            info = tdl.extract_info(url, download=False)
+        URL = info["formats"][0]["url"]
+        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPRIONS))
+        await ctx.send(
+            embed=discord.Embed(
+                title="노래재생", description="현재" + url + "을(를) 재생하고있습니다", color=0x0000CD
+            )
+        )
+    else:
+        await ctx.send("Song is already played")
 
 
 bot.run(token)
