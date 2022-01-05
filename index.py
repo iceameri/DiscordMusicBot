@@ -160,7 +160,6 @@ async def 목록초기화(ctx):
 
 @bot.command()
 async def 목록재생(ctx):
-
     YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
     FFMPEG_OPTIONS = {
         "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
