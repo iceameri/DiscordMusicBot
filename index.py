@@ -198,13 +198,11 @@ async def on_ready():
     print("Bot Initiating")
     print(bot.user.name)
     print("connetion was succesful")
-
     await bot.change_presence(
         # 음악연구 + "하는 중"이 자동으로 붙음
         status=discord.Status.online,
         activity=discord.Game("음악연구"),
     )
-
     if not discord.opus.is_loaded():
         discord.opus.load_opus("opus")
 
