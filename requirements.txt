@@ -1,0 +1,11 @@
+asyncio
+selenium
+discord.py[voice]
+pip
+beautifulsoup4
+youtube-dl
+ffmpeg-python
+requets
+lxml
+urllib3
+Options
