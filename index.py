@@ -203,6 +203,7 @@ async def on_ready():
         status=discord.Status.online,
         activity=discord.Game("음악연구"),
     )
+
     if not discord.opus.is_loaded():
         discord.opus.load_opus("opus")
 
