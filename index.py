@@ -274,7 +274,10 @@ async def 재생(ctx, *, msg):
         )
         vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
     else:
-        await ctx.send("이미 노래가 재생 중이라 노래를 재생할 수 없어요!")
+        user.append(msg)
+        result, URLTEST = title(msg)
+        song_queue.append(URLTEST)
+        await ctx.send("이미 노래가 재생 중이라 " + result + "을(를) 대기열로 추가시켰어요!")
 
 
 @bot.command()
