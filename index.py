@@ -229,7 +229,10 @@ async def url(ctx, *, url):
             )
         )
     else:
-        await ctx.send("Song is already played")
+        user.append(msg)
+        result, URLTEST = title(msg)
+        song_queue.append(URLTEST)
+        await ctx.send("이미 노래가 재생 중이라 " + result + "을(를) 대기열로 추가시켰어요!")
 
 
 @bot.command()
@@ -377,6 +380,7 @@ async def 지금노래(ctx):
                 color=0x00FF00,
             )
         )
+
 
 @bot.command()
 async def 명령어(ctx):
