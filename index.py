@@ -7,11 +7,11 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from discord.utils import get
 from discord import FFmpegPCMAudio
+import os
 
 # 기본 명령어 앞에 !사용
 bot = commands.Bot(command_prefix="!")
 
-token = "OTI3NzQwODYwMDY0NDY5MDQz.YdOoAQ.zcd_aSj5JGiiMR3nKk_VQ9IsoLI"
 
 user = []  # 유저가 입력한 노래정보
 musictitle = []  # 가공된 정보의 노래 제목
@@ -31,9 +31,7 @@ def title(msg):
     options = webdriver.ChromeOptions()
     options.add_argument("headless")
 
-    chromedriver_dir = "chromedriver.exe"
-
-    driver = webdriver.Chrome(chromedriver_dir, options=options)
+    driver = load_chrome_driver()
     driver.get("https://www.youtube.com/results?search_query=" + msg + "+lyrics")
     source = driver.page_source
     bs = bs4.BeautifulSoup(source, "lxml")
@@ -178,16 +176,38 @@ async def 목록재생(ctx):
             await ctx.send("노래가 이미 재생되고 있어요!")
 
 
+def load_chrome_driver():
+
+    options = webdriver.ChromeOptions()
+
+    options.binary_location = os.getenv("GOOGLE_CHROME_BIN")
+
+    options.add_argument("--headless")
+    # options.add_argument('--disable-gpu')
+    options.add_argument("--no-sandbox")
+
+    return webdriver.Chrome(
+        executable_path=str(os.environ.get("CHROME_EXECUTABLE_PATH")),
+        chrome_options=options,
+    )
+
+
 @bot.event
 async def on_ready():
     print("Bot Initiating")
     print(bot.user.name)
     print("connetion was succesful")
+
+    token = os.getenv("token")
+
     await bot.change_presence(
         # 음악연구 + "하는 중"이 자동으로 붙음
         status=discord.Status.online,
         activity=discord.Game("음악연구"),
     )
+
+    if not discord.opus.is_loaded():
+        discord.opus.load_opus("opus")
 
 
 @bot.command()
@@ -250,8 +270,7 @@ async def 재생(ctx, *, msg):
         }
 
         # chromedriver와 셀레니움을 활용하여 유튜브에서 영상 제목과 링크 등을 가져오는 코드
-        chromedriver_dir = "chromedriver.exe"
-        driver = webdriver.Chrome(chromedriver_dir, options=options)
+        driver = load_chrome_driver()
         driver.get("https://www.youtube.com/results?search_query=" + msg + "+lyrics")
         source = driver.page_source
         bs = bs4.BeautifulSoup(source, "lxml")
@@ -298,8 +317,7 @@ async def 멜론차트(ctx):
         }
 
         # chromedriver와 셀레니움을 활용하여 유튜브에서 영상 제목과 링크 등을 가져오는 코드
-        chromedriver_dir = "chromedriver.exe"
-        driver = webdriver.Chrome(chromedriver_dir, options=options)
+        driver = load_chrome_driver()
         driver.get("https://www.youtube.com/results?search_query=멜론차트")
         source = driver.page_source
         bs = bs4.BeautifulSoup(source, "lxml")
