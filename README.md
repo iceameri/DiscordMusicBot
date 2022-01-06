@@ -26,7 +26,7 @@ bot.run(token)
 tokenInfo.py(개발예정)
 
 ```jsx
-token = "{토큰명}"
+token = "{토큰명}";
 ```
 
 .gitignore
@@ -43,9 +43,8 @@ tokenInfo.py
 ## 봇 불러오기 / 내보내기
 
 > pip install pynacl
-> 
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled.png)
+![Untitled](./README_IMAGE/Untitled 1.png)(%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled.png)
 
 #명령어 !join !out
 
@@ -74,18 +73,14 @@ async def out(ctx):
 ## 음악플레이어 셋업 pip 추가 설치 / ffmpeg
 
 > pip install selenium
-> 
 
 > pip install beautifulsoup4
-> 
 
 > pip install youtube_dl
-> 
 
 > pip install requests
-> 
 
-*selenium : 크롤링 프레임워크
+\*selenium : 크롤링 프레임워크
 
 로그인 해야만 볼 수 잇는 페이지를 긁어온다거나 할 때 사용하기 위해서 동적 페이지라고 할지라도 HTTP request를 이용하면 원하는 값을 가져올 수 있다
 
@@ -102,7 +97,6 @@ ffmpeg full 다운
 압축해제후 경로복사하여 path에 추가
 
 > ..\ffmpeg-4.4.1-full_build\bin
-> 
 
 path가 정확히 잡혔는지 확인
 
@@ -161,7 +155,6 @@ async def play(ctx, *, url):
 ### 셀레니움 크롤링을 위한 lxml 설치
 
 > pip install lxml
-> 
 
 ![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%206.png)
 
@@ -656,16 +649,12 @@ async def 재생(ctx, *, msg):
 ![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2014.png)
 
 > https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
-> 
 
 > https://github.com/xrisk/heroku-opus.git
-> 
 
 > https://github.com/heroku/heroku-buildpack-chromedriver
-> 
 
 > https://github.com/heroku/heroku-buildpack-google-chrome
-> 
 
 **Deploy - Deployment method - GitHub 연동**
 
@@ -675,9 +664,9 @@ async def 재생(ctx, *, msg):
 
 ## 서버이용을 위해 필수파일 생성
 
-*최상위폴더에 생성
+\*최상위폴더에 생성
 
-**Procfile** (확장자명 없음) *띄어쓰기 주의
+**Procfile** (확장자명 없음) \*띄어쓰기 주의
 
 ```jsx
 worker:(작성한 코드 파일명.확장자)
@@ -688,20 +677,20 @@ worker: python index.py
 
 **requirements.txt**
 
-*2022 10월 버전없이 작동(버전없이 작동하는 것이 10년넘은것으로 확인됨)
+\*2022 10월 버전없이 작동(버전없이 작동하는 것이 10년넘은것으로 확인됨)
 
 ```jsx
-asyncio
-selenium
-discord.py[voice]
-pip
-beautifulsoup4
-youtube-dl
-ffmpeg-python
-requests
-lxml
-urllib3
-Options
+asyncio;
+selenium;
+discord.py[voice];
+pip;
+beautifulsoup4;
+youtube - dl;
+ffmpeg - python;
+requests;
+lxml;
+urllib3;
+Options;
 ```
 
 ![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2017.png)
@@ -709,14 +698,14 @@ Options
 Aptfile (확장자명없음)
 
 ```jsx
-git
+git;
 ```
 
 ![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2018.png)
 
 **runtime.txt**
 
- [여기](https://devcenter.heroku.com/articles/python-support) 에서 Heroku가 작동하는 runtime python버전 확인
+[여기](https://devcenter.heroku.com/articles/python-support) 에서 Heroku가 작동하는 runtime python버전 확인
 
 ```jsx
 python-3.8.12
@@ -731,18 +720,15 @@ token의 경우 중요한 정보이기 때문에 config파일에 따로 관리�
 ![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2019.png)
 
 > Key : CHROME_EXECUTABLE_PATH / Values : /app/.chromedriver/bin/chromedriver
-> 
 
-> Key : GOOGLE_CHROME_BIN /  Values : /app/.apt/usr/bin/google-chrome
-> 
+> Key : GOOGLE_CHROME_BIN / Values : /app/.apt/usr/bin/google-chrome
 
 > Key : DISCORD_TOKEN / Values : 봇토큰
-> 
 
 **index.py**
 
 ```jsx
-token = os.environ.get("DISCORD_TOKEN")
+token = os.environ.get("DISCORD_TOKEN");
 ```
 
 ```jsx
@@ -763,8 +749,7 @@ def load_chrome_driver():
 ```
 
 > @bot.event
-async def on_ready(): 에서 opus 를 더 이상 등록하지 않아도 된다
-> 
+> async def on_ready(): 에서 opus 를 더 이상 등록하지 않아도 된다
 
 [여기](https://github.com/xrisk/heroku-opus) 에서 확인
 
@@ -810,7 +795,7 @@ Save Job을하게 되면 자동으로 서버가 돌아감
 
 기본에 서버를 켜는 것은 꺼야 충돌이 안일어남
 
-출처 
+출처
 
 [https://todaycode.tistory.com/5?category=979456](https://todaycode.tistory.com/5?category=979456)
 
