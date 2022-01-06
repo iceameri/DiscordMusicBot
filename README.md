@@ -793,8 +793,6 @@ Heroku 자체에서 매일 서버가 꺼지기 때문에
 
 Save Job을하게 되면 자동으로 서버가 돌아감
 
-기본에 서버를 켜는 것은 꺼야 충돌이 안일어남
-
 출처
 
 [https://todaycode.tistory.com/5?category=979456](https://todaycode.tistory.com/5?category=979456)
