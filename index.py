@@ -20,6 +20,21 @@ song_queue = []  # 가공된 정보의 노래 링크
 musicnow = []  # 현재 출력되는 노래배열
 
 
+def URLPLAY(url):
+    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
+    FFMPEG_OPTIONS = {
+        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
+        "options": "-vn",
+    }
+
+    if not vc.is_playing():
+        with YoutubeDL(YDL_OPTIONS) as ydl:
+            info = ydl.extract_info(url, download=False)
+        URL = info["formats"][0]["url"]
+        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
+        client.loop.create_task(subtitle_song(ctx, URL))
+
+
 def title(msg):
     global music
 
@@ -205,7 +220,6 @@ async def on_ready():
     )
 
 
-
 @bot.command()
 async def join(ctx):
     try:
@@ -339,6 +353,64 @@ async def 멜론차트(ctx):
         vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
     else:
         await ctx.send("이미 노래가 재생 중이라 노래를 재생할 수 없어요!")
+
+
+def URLPLAY(url):
+    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
+    FFMPEG_OPTIONS = {
+        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
+        "options": "-vn",
+    }
+
+    if not vc.is_playing():
+        with YoutubeDL(YDL_OPTIONS) as ydl:
+            info = ydl.extract_info(url, download=False)
+        URL = info["formats"][0]["url"]
+        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
+        client.loop.create_task(subtitle_song(ctx, URL))
+
+
+@bot.command()
+async def 정밀검색(ctx, *, msg):
+    Text = ""
+    global Text
+    global rinklist
+    global Alist
+    rinklist = [0, 0, 0, 0, 0]
+
+    try:
+        global vc
+        vc = await ctx.message.author.voice.channel.connect()
+    except:
+        try:
+            await vc.move_to(ctx.message.author.voice.channel)
+        except:
+            await ctx.send("채널에 유저가 접속해있지 않네요..")
+
+    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
+    FFMPEG_OPTIONS = {
+        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
+        "options": "-vn",
+    }
+
+    driver = load_chrome_driver()
+    driver.get("https://www.youtube.com/results?search_query=" + msg)
+    source = driver.page_source
+    bs = bs4.BeautifulSoup(source, "lxml")
+    entire = bs.find_all("a", {"id": "video-title"})
+    for i in range(0, 4):
+        entireNum = entire[i]
+        entireText = entireNum.text.strip()  # 영상제목
+        test1 = entireNum.get("href")  # 하이퍼링크
+        rinklist[i] = "https://www.youtube.com" + test1
+        Text = Text + str(i + 1) + "번째 영상" + entireText + "\n링크 : " + rinklist[i]
+
+    await ctx.send(
+        embed=discord.Embed(
+            title="검색한 영상들입니다.", description=Text.strip(), color=0x00FF00
+        )
+    )
+    Alist = await ctx.send(embed=embed)
 
 
 @bot.command()
