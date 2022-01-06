@@ -44,7 +44,7 @@ tokenInfo.py
 
 > pip install pynacl
 
-![Untitled 1](/images/README_IMAGE/Untitled 1.png)(%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled.png)
+![Untitled](/images/README_IMAGE/Untitled.png)
 
 #명령어 !join !out
 
@@ -88,11 +88,11 @@ async def out(ctx):
 
 [https://www.ffmpeg.org/](https://www.ffmpeg.org/) -download - Windows builds from gyan.dev
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%201.png)
+![Untitled](/images/README_IMAGE/Untitled%201.png)
 
 ffmpeg full 다운
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%202.png)
+![Untitled](/images/README_IMAGE/Untitled%202.png)
 
 압축해제후 경로복사하여 path에 추가
 
@@ -100,7 +100,7 @@ ffmpeg full 다운
 
 path가 정확히 잡혔는지 확인
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%203.png)
+![Untitled](/images/README_IMAGE/Untitled%203.png)
 
 ---
 
@@ -140,7 +140,7 @@ async def play(ctx, *, url):
         await ctx.send("Song is already played")
 ```
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%204.png)
+![Untitled](/images/README_IMAGE/Untitled%204.png)
 
 ---
 
@@ -148,7 +148,7 @@ async def play(ctx, *, url):
 
 [https://chromedriver.chromium.org/downloads](https://chromedriver.chromium.org/downloads)
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%205.png)
+![Untitled](/images/README_IMAGE/Untitled%205.png)
 
 크롬 버전에 맞는 ChromeDriver 다운로드 맞는 버전이 없는 경우 해당 버전에 근접하는 버전다운
 
@@ -156,7 +156,7 @@ async def play(ctx, *, url):
 
 > pip install lxml
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%206.png)
+![Untitled](/images/README_IMAGE/Untitled%206.png)
 
 ```jsx
 @bot.command()
@@ -198,7 +198,7 @@ async def 재생(ctx, *, msg):
         await ctx.send("이미 노래가 재생 중이라 노래를 재생할 수 없어요!")
 ```
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%207.png)
+![Untitled](/images/README_IMAGE/Untitled%207.png)
 
 ---
 
@@ -243,7 +243,7 @@ async def stop(ctx):
         await ctx.send("Puree is resting")
 ```
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%208.png)
+![Untitled](/images/README_IMAGE/Untitled%208.png)
 
 ---
 
@@ -260,7 +260,7 @@ async def on_ready():
     )
 ```
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%209.png)
+![Untitled](/images/README_IMAGE/Untitled%209.png)
 
 ```jsx
 @bot.command()
@@ -308,7 +308,7 @@ async def 재생(ctx, *, msg):
         await ctx.send("이미 노래가 재생 중이라 노래를 재생할 수 없어요!")
 ```
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2010.png)
+![Untitled](/images/README_IMAGE/Untitled%2010.png)
 
 ```jsx
 @bot.command()
@@ -356,7 +356,7 @@ async def 멜론차트(ctx):
         await ctx.send("이미 노래가 재생 중이라 노래를 재생할 수 없어요!")
 ```
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2011.png)
+![Untitled](/images/README_IMAGE/Untitled%2011.png)
 
 ---
 
@@ -640,13 +640,13 @@ async def 재생(ctx, *, msg):
 
 [Heroku](https://dashboard.heroku.com/apps) 가입
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2012.png)
+![Untitled](/images/README_IMAGE/Untitled%2012.png)
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2013.png)
+![Untitled](/images/README_IMAGE/Untitled%2013.png)
 
 **Settings - Buildpacks 설정**
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2014.png)
+![Untitled](/images/README_IMAGE/Untitled%2014.png)
 
 > https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
 
@@ -660,7 +660,7 @@ async def 재생(ctx, *, msg):
 
 연동후 해당 프로젝트연결
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2015.png)
+![Untitled](/images/README_IMAGE/Untitled%2015.png)
 
 ## 서버이용을 위해 필수파일 생성
 
@@ -673,7 +673,7 @@ worker:(작성한 코드 파일명.확장자)
 worker: python index.py
 ```
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2016.png)
+![Untitled](/images/README_IMAGE/Untitled%2016.png)
 
 **requirements.txt**
 
@@ -693,7 +693,7 @@ urllib3;
 Options;
 ```
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2017.png)
+![Untitled](/images/README_IMAGE/Untitled%2017.png)
 
 Aptfile (확장자명없음)
 
@@ -701,7 +701,7 @@ Aptfile (확장자명없음)
 git;
 ```
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2018.png)
+![Untitled](/images/README_IMAGE/Untitled%2018.png)
 
 **runtime.txt**
 
@@ -717,7 +717,7 @@ python-3.8.12
 
 token의 경우 중요한 정보이기 때문에 config파일에 따로 관리해야하지만 Heroku에서 기본적으로 제공해주는 Config Vars를 이용 (Settings - Config Vars)
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2019.png)
+![Untitled](/images/README_IMAGE/Untitled%2019.png)
 
 > Key : CHROME_EXECUTABLE_PATH / Values : /app/.chromedriver/bin/chromedriver
 
@@ -753,7 +753,7 @@ def load_chrome_driver():
 
 [여기](https://github.com/xrisk/heroku-opus) 에서 확인
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2020.png)
+![Untitled](/images/README_IMAGE/Untitled%2020.png)
 
 ---
 
@@ -761,21 +761,21 @@ def load_chrome_driver():
 
 정상적으로 파일이 올라간 경우 Overview에서 확인가능하다
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2021.png)
+![Untitled](/images/README_IMAGE/Untitled%2021.png)
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2022.png)
+![Untitled](/images/README_IMAGE/Untitled%2022.png)
 
 서버를 켜면 봇이 켜지는 것을 확인 할 수 있다
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2023.png)
+![Untitled](/images/README_IMAGE/Untitled%2023.png)
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2024.png)
+![Untitled](/images/README_IMAGE/Untitled%2024.png)
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2025.png)
+![Untitled](/images/README_IMAGE/Untitled%2025.png)
 
 정상작동 확인 (글 작성은 다음날 진행함)
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2026.png)
+![Untitled](/images/README_IMAGE/Untitled%2026.png)
 
 ### 24시간 구동
 
@@ -783,13 +783,13 @@ Heroku 자체에서 매일 서버가 꺼지기 때문에
 
 [https://elements.heroku.com/addons](https://elements.heroku.com/addons) 에서 스케쥴러 사용(계정정보에서 카드등록하면 사용가능)
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2027.png)
+![Untitled](/images/README_IMAGE/Untitled%2027.png)
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2028.png)
+![Untitled](/images/README_IMAGE/Untitled%2028.png)
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2029.png)
+![Untitled](/images/README_IMAGE/Untitled%2029.png)
 
-![Untitled](%E1%84%83%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%83%E1%85%B3%20%E1%84%86%E1%85%B2%E1%84%8C%E1%85%B5%E1%86%A8%E1%84%87%E1%85%A9%E1%86%BA%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20afcc890ab2b54ea0be208f9d24adc56e/Untitled%2030.png)
+![Untitled](/images/README_IMAGE/Untitled%2030.png)
 
 Save Job을하게 되면 자동으로 서버가 돌아감
 
