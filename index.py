@@ -25,6 +25,12 @@ musictitle = []  # 가공된 정보의 노래 제목
 song_queue = []  # 가공된 정보의 노래 링크
 musicnow = []  # 현재 출력되는 노래배열
 
+userF = []  # 유저 정보 저장 배열
+userFlist = []  # 유저 개닝 노래 저장 배열
+allplaylist = []  # 플레이리스트 배열
+
+number = 1
+
 
 def URLPLAY(url):
     YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
@@ -118,6 +124,38 @@ def play_next(ctx):
             )
 
 
+def again(ctx, url):
+    global number
+    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
+    FFMPEG_OPTIONS = {
+        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
+        "options": "-vn",
+    }
+    if number:
+        with YoutubeDL(YDL_OPTIONS) as ydl:
+            info = ydl.extract_info(url, download=False)
+        URL = info["formats"][0]["url"]
+        if not vc.is_playing():
+            vc.play(
+                FFmpegPCMAudio(URL, **FFMPEG_OPTIONS), after=lambda e: again(ctx, url)
+            )
+
+
+def URLPLAY(url):
+    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
+    FFMPEG_OPTIONS = {
+        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
+        "options": "-vn",
+    }
+
+    if not vc.is_playing():
+        with YoutubeDL(YDL_OPTIONS) as ydl:
+            info = ydl.extract_info(url, download=False)
+        URL = info["formats"][0]["url"]
+        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
+        client.loop.create_task(subtitle_song(ctx, URL))
+
+
 @bot.command()
 async def 대기열추가(ctx, *, msg):
     user.append(msg)
@@ -204,6 +242,103 @@ async def 목록재생(ctx):
             await ctx.send("노래가 이미 재생되고 있어요!")
 
 
+@bot.command()
+async def 즐겨찾기(ctx):
+    global Ftext
+    Ftext = ""
+    correct = 0
+    global Flist
+    for i in range(len(userF)):
+        if userF[i] == str(ctx.message.author.name):  # userF에 유저정보가 있는지 확인
+            correct = 1  # 있으면 넘김
+    if correct == 0:
+        userF.append(str(ctx.message.author.name))  # userF에다가 유저정보를 저장
+        userFlist.append([])  # 유저 노래 정보 첫번째에 유저이름을 저장하는 리스트를 만듬.
+        userFlist[len(userFlist) - 1].append(str(ctx.message.author.name))
+
+    for i in range(len(userFlist)):
+        if userFlist[i][0] == str(ctx.message.author.name):
+            if len(userFlist[i]) >= 2:  # 노래가 있다면
+                for j in range(1, len(userFlist[i])):
+                    Ftext = Ftext + "\n" + str(j) + ". " + str(userFlist[i][j])
+                titlename = str(ctx.message.author.name) + "님의 즐겨찾기"
+                embed = discord.Embed(
+                    title=titlename, description=Ftext.strip(), color=0x00FF00
+                )
+                embed.add_field(
+                    name="목록에 추가\U0001F4E5",
+                    value="즐겨찾기에 모든 곡들을 목록에 추가합니다.",
+                    inline=False,
+                )
+                embed.add_field(
+                    name="플레이리스트로 추가\U0001F4DD",
+                    value="즐겨찾기에 모든 곡들을 새로운 플레이리스트로 저장합니다.",
+                    inline=False,
+                )
+                Flist = await ctx.send(embed=embed)
+                await Flist.add_reaction("\U0001F4E5")
+                await Flist.add_reaction("\U0001F4DD")
+            else:
+                await ctx.send("아직 등록하신 즐겨찾기가 없어요.")
+
+
+@bot.command()
+async def 즐겨찾기추가(ctx, *, msg):
+    correct = 0
+    for i in range(len(userF)):
+        if userF[i] == str(ctx.message.author.name):  # userF에 유저정보가 있는지 확인
+            correct = 1  # 있으면 넘김
+    if correct == 0:
+        userF.append(str(ctx.message.author.name))  # userF에다가 유저정보를 저장
+        userFlist.append([])  # 유저 노래 정보 첫번째에 유저이름을 저장하는 리스트를 만듦.
+        userFlist[len(userFlist) - 1].append(str(ctx.message.author.name))
+
+    for i in range(len(userFlist)):
+        if userFlist[i][0] == str(ctx.message.author.name):
+
+            options = webdriver.ChromeOptions()
+            options.add_argument("headless")
+
+            chromedriver_dir = r"D:\Discord_Bot\chromedriver.exe"
+            driver = webdriver.Chrome(chromedriver_dir, options=options)
+            driver.get(
+                "https://www.youtube.com/results?search_query=" + msg + "+lyrics"
+            )
+            source = driver.page_source
+            bs = bs4.BeautifulSoup(source, "lxml")
+            entire = bs.find_all("a", {"id": "video-title"})
+            entireNum = entire[0]
+            music = entireNum.text.strip()
+
+            driver.quit()
+
+            userFlist[i].append(music)
+            await ctx.send(music + "(이)가 정상적으로 등록되었어요!")
+
+
+@bot.command()
+async def 즐겨찾기삭제(ctx, *, number):
+    correct = 0
+    for i in range(len(userF)):
+        if userF[i] == str(ctx.message.author.name):  # userF에 유저정보가 있는지 확인
+            correct = 1  # 있으면 넘김
+    if correct == 0:
+        userF.append(str(ctx.message.author.name))  # userF에다가 유저정보를 저장
+        userFlist.append([])  # 유저 노래 정보 첫번째에 유저이름을 저장하는 리스트를 만듦.
+        userFlist[len(userFlist) - 1].append(str(ctx.message.author.name))
+
+    for i in range(len(userFlist)):
+        if userFlist[i][0] == str(ctx.message.author.name):
+            if len(userFlist[i]) >= 2:  # 노래가 있다면
+                try:
+                    del userFlist[i][int(number)]
+                    await ctx.send("정상적으로 삭제되었습니다.")
+                except:
+                    await ctx.send("입력한 숫자가 잘못되었거나 즐겨찾기의 범위를 초과하였습니다.")
+            else:
+                await ctx.send("즐겨찾기에 노래가 없어서 지울 수 없어요!")
+
+
 def load_chrome_driver():
 
     options = webdriver.ChromeOptions()
@@ -230,6 +365,58 @@ async def on_ready():
         status=discord.Status.online,
         activity=discord.Game("음악연구"),
     )
+
+
+@bot.event
+async def on_reaction_add(reaction, users):
+    if users.bot == 1:
+        pass
+    else:
+        try:
+            await Flist.delete()
+        except:
+            pass
+        else:
+            if str(reaction.emoji) == "\U0001F4E5":
+                await reaction.message.channel.send(
+                    "잠시만 기다려주세요. (즐겨찾기 갯수가 많으면 지연될 수 있습니다.)"
+                )
+                print(users.name)
+                for i in range(len(userFlist)):
+                    if userFlist[i][0] == str(users.name):
+                        for j in range(1, len(userFlist[i])):
+                            try:
+                                driver.close()
+                            except:
+                                print("NOT CLOSED")
+
+                            user.append(userFlist[i][j])
+                            result, URLTEST = title(userFlist[i][j])
+                            song_queue.append(URLTEST)
+                            await reaction.message.channel.send(
+                                userFlist[i][j] + "를 재생목록에 추가했어요!"
+                            )
+            elif str(reaction.emoji) == "\U0001F4DD":
+                await reaction.message.channel.send(
+                    "플레이리스트가 나오면 생길 기능이랍니다. 추후에 올릴 영상을 기다려주세요!"
+                )
+
+            # 정밀검색추가부분
+            elif str(reaction.emoji) == "\u0031\uFE0F\u20E3":
+                URLPLAY(rinklist[0])
+                await ctx.send("정상적으로 진행되었습니다.")
+            elif str(reaction.emoji) == "\u0032\uFE0F\u20E3":
+                URLPLAY(rinklist[1])
+                await ctx.send("정상적으로 진행되었습니다.")
+            elif str(reaction.emoji) == "\u0033\uFE0F\u20E3":
+                URLPLAY(rinklist[2])
+                await ctx.send("정상적으로 진행되었습니다.")
+            elif str(reaction.emoji) == "\u0034\uFE0F\u20E3":
+                URLPLAY(rinklist[3])
+                await ctx.send("정상적으로 진행되었습니다.")
+            elif str(reaction.emoji) == "\u0035\uFE0F\u20E3":
+                URLPLAY(rinklist[4])
+                await ctx.send("정상적으로 진행되었습니다.")
 
 
 @bot.command()
@@ -396,6 +583,10 @@ def URLPLAY(url):
 
 @bot.command()
 async def 정밀검색(ctx, *, msg):
+    # 검색할때 크롬창 안보이게하기
+    options = webdriver.ChromeOptions()
+    options.add_argument("headless")
+
     Text = ""
     # global Text
     global rinklist
@@ -444,6 +635,61 @@ async def 정밀검색(ctx, *, msg):
 
 
 @bot.command()
+async def 반복재생(ctx, *, msg):
+
+    try:
+        global vc
+        vc = await ctx.message.author.voice.channel.connect()
+    except:
+        try:
+            await vc.move_to(ctx.message.author.voice.channel)
+        except:
+            pass
+
+    global entireText
+    global number
+    number = 1
+    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
+    FFMPEG_OPTIONS = {
+        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
+        "options": "-vn",
+    }
+
+    if len(musicnow) - len(user) >= 1:
+        for i in range(len(musicnow) - len(user)):
+            del musicnow[0]
+
+    # Heroku server
+    # driver = load_chrome_driver()
+
+    # local dev
+    # , options=options 생략 왜인지모름
+    # 검색할때 크롬창 안보이게하기
+    # options = webdriver.ChromeOptions()
+    # options.add_argument("headless")
+    chromedriver_dir = r"chromedriver.exe"
+    driver = webdriver.Chrome(chromedriver_dir)
+
+    driver.get("https://www.youtube.com/results?search_query=" + msg + "+lyrics")
+    source = driver.page_source
+    bs = bs4.BeautifulSoup(source, "lxml")
+    entire = bs.find_all("a", {"id": "video-title"})
+    entireNum = entire[0]
+    entireText = entireNum.text.strip()
+    musicnow.insert(0, entireText)
+    test1 = entireNum.get("href")
+    url = "https://www.youtube.com" + test1
+    await ctx.send(
+        embed=discord.Embed(
+            title="반복재생",
+            description="현재 " + musicnow[0] + "을(를) 반복재생하고 있습니다.",
+            color=0x00FF00,
+        )
+    )
+    again(ctx, url)
+
+
+@bot.command()
 async def pause(ctx):
     if vc.is_playing():
         vc.pause()
@@ -474,6 +720,8 @@ async def resume(ctx):
 async def stop(ctx):
     if vc.is_playing():
         vc.stop()
+        global number
+        number = 0
         await ctx.send(
             embed=discord.Embed(
                 title="노래끄기", description=entireText + "을(를) 종료했습니다", color=0x00FF00
@@ -521,7 +769,8 @@ async def 명령어(ctx):
 !목록재생 -> 목록에 추가된 노래를 재생합니다.
 !목록초기화 -> 목록에 추가된 모든 노래를 지웁니다.
 \n!대기열추가 [노래] -> 노래를 대기열에 추가합니다.
-!대기열삭제 [숫자] -> 대기열에서 입력한 숫자에 해당하는 노래를 지웁니다.""",
+!대기열삭제 [숫자] -> 대기열에서 입력한 숫자에 해당하는 노래를 지웁니다.
+\n!반복재생 -> 노래한곡을 반복재생합니다 다른노래를 바꿀경우 재생중인 노래를 멈추고 명령어를 다시 입력해야합니다""",
             color=0x00FF00,
         )
     )
