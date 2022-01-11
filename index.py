@@ -32,21 +32,6 @@ allplaylist = []  # 플레이리스트 배열
 number = 1
 
 
-def URLPLAY(url):
-    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
-    FFMPEG_OPTIONS = {
-        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-        "options": "-vn",
-    }
-
-    if not vc.is_playing():
-        with YoutubeDL(YDL_OPTIONS) as ydl:
-            info = ydl.extract_info(url, download=False)
-        URL = info["formats"][0]["url"]
-        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
-        client.loop.create_task(subtitle_song(ctx, URL))
-
-
 def title(msg):
     global music
 
@@ -743,6 +728,27 @@ async def 지금노래(ctx):
                 color=0x00FF00,
             )
         )
+
+
+@bot.command()
+async def 스킵(ctx):
+    if len(user) > 1:
+        if vc.is_playing():
+            vc.stop()
+            global number
+            number = 0
+            await ctx.send(
+                embed=discord.Embed(
+                    title="스킵",
+                    description=musicnow[0] + "을(를) 다음에 재생합니다!",
+                    color=0x00FF00,
+                )
+            )
+            
+        else:
+            await ctx.send("노래가 이미 재생되고 있어요!")
+    else:
+        await ctx.send("목록에 노래가 2개 이상 없네요..")
 
 
 @bot.command()
