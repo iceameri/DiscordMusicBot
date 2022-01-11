@@ -8,11 +8,17 @@ from selenium.webdriver.chrome.options import Options
 from discord.utils import get
 from discord import FFmpegPCMAudio
 import os
+import Token
 
 # 기본 명령어 앞에 !사용
 bot = commands.Bot(command_prefix="!")
 
-token = os.environ.get("DISCORD_TOKEN")
+# Heroku server
+# token = os.environ.get("DISCORD_TOKEN")
+
+# local dev
+token = Token.Token().getToken()
+
 
 user = []  # 유저가 입력한 노래정보
 musictitle = []  # 가공된 정보의 노래 제목
@@ -47,7 +53,13 @@ def title(msg):
     options = webdriver.ChromeOptions()
     options.add_argument("headless")
 
-    driver = load_chrome_driver()
+    # Heroku server
+    # driver = load_chrome_driver()
+
+    # local dev
+    chromedriver_dir = r"chromedriver.exe"
+    driver = webdriver.Chrome(chromedriver_dir, options=options)
+
     driver.get("https://www.youtube.com/results?search_query=" + msg + "+lyrics")
     source = driver.page_source
     bs = bs4.BeautifulSoup(source, "lxml")
@@ -280,7 +292,13 @@ async def 재생(ctx, *, msg):
         }
 
         # chromedriver와 셀레니움을 활용하여 유튜브에서 영상 제목과 링크 등을 가져오는 코드
-        driver = load_chrome_driver()
+        # Heroku server
+        # driver = load_chrome_driver()
+
+        # local dev
+        chromedriver_dir = r"chromedriver.exe"
+        driver = webdriver.Chrome(chromedriver_dir, options=options)
+
         driver.get("https://www.youtube.com/results?search_query=" + msg + "+lyrics")
         source = driver.page_source
         bs = bs4.BeautifulSoup(source, "lxml")
@@ -327,7 +345,13 @@ async def 멜론차트(ctx):
         }
 
         # chromedriver와 셀레니움을 활용하여 유튜브에서 영상 제목과 링크 등을 가져오는 코드
-        driver = load_chrome_driver()
+        # Heroku server
+        # driver = load_chrome_driver()
+
+        # local dev
+        chromedriver_dir = r"chromedriver.exe"
+        driver = webdriver.Chrome(chromedriver_dir, options=options)
+
         driver.get("https://www.youtube.com/results?search_query=멜론차트")
         source = driver.page_source
         bs = bs4.BeautifulSoup(source, "lxml")
@@ -373,7 +397,7 @@ def URLPLAY(url):
 @bot.command()
 async def 정밀검색(ctx, *, msg):
     Text = ""
-    global Text
+    # global Text
     global rinklist
     global Alist
     rinklist = [0, 0, 0, 0, 0]
@@ -393,7 +417,13 @@ async def 정밀검색(ctx, *, msg):
         "options": "-vn",
     }
 
-    driver = load_chrome_driver()
+    # Heroku server
+    # driver = load_chrome_driver()
+
+    # local dev
+    chromedriver_dir = r"chromedriver.exe"
+    driver = webdriver.Chrome(chromedriver_dir, options=options)
+
     driver.get("https://www.youtube.com/results?search_query=" + msg)
     source = driver.page_source
     bs = bs4.BeautifulSoup(source, "lxml")

@@ -145,4 +145,4 @@ cython_debug/
 # End of https://www.toptal.com/developers/gitignore/api/python
 
 #2022-01-04 add
-tokenInfo.py
+Token.py
