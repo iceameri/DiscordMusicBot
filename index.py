@@ -18,9 +18,8 @@ bot = commands.Bot(command_prefix="!")
 CHROMEOPTIONS = webdriver.ChromeOptions()
 CHROMEOPTIONS.add_argument("headless")
 
-# prfix
+# prefix
 PREFIX_YOUTUBEURL = "https://www.youtube.com/results?search_query="
-
 
 # Heroku server TOKEN
 # TOKEN = os.environ.get("DISCORD_TOKEN")
@@ -300,7 +299,9 @@ async def 즐겨찾기삭제(ctx, *, number):
 
 
 def load_chrome_driver():
-    CHROMEOPTIONS.binary_location = os.getenv("GOOGLE_CHROME_BIN")
+    options = webdriver.ChromeOptions()
+
+    options.binary_location = os.getenv("GOOGLE_CHROME_BIN")
 
     options.add_argument("--headless")
     # options.add_argument('--disable-gpu')
