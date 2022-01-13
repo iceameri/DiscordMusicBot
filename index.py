@@ -9,6 +9,7 @@ from discord.utils import get
 from discord import FFmpegPCMAudio
 import os
 import Token
+from frame import document
 
 # 기본 명령어 앞에 !사용
 bot = commands.Bot(command_prefix="!")
@@ -17,7 +18,7 @@ bot = commands.Bot(command_prefix="!")
 # token = os.environ.get("DISCORD_TOKEN")
 
 # local dev
-token = Token.Token().getToken()
+token = Token.TOKEN
 
 
 user = []  # 유저가 입력한 노래정보
@@ -34,12 +35,6 @@ number = 1
 
 def title(msg):
     global music
-
-    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
-    FFMPEG_OPTIONS = {
-        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-        "options": "-vn",
-    }
 
     options = webdriver.ChromeOptions()
     options.add_argument("headless")
@@ -62,7 +57,7 @@ def title(msg):
     musicnow.append(music)
     test1 = entireNum.get("href")
     url = "https://www.youtube.com" + test1
-    with YoutubeDL(YDL_OPTIONS) as ydl:
+    with YoutubeDL(document.YDL_OPTIONS) as ydl:
         info = ydl.extract_info(url, download=False)
     URL = info["formats"][0]["url"]
 
@@ -73,29 +68,24 @@ def title(msg):
 
 def play(ctx):
     global vc
-    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
-    FFMPEG_OPTIONS = {
-        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-        "options": "-vn",
-    }
+
     URL = song_queue[0]
     del user[0]
     del musictitle[0]
     del song_queue[0]
     vc = get(bot.voice_clients, guild=ctx.guild)
     if not vc.is_playing():
-        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS), after=lambda e: play_next(ctx))
+        vc.play(
+            FFmpegPCMAudio(URL, **document.FFMPEG_OPTIONS),
+            after=lambda e: play_next(ctx),
+        )
 
 
 def play_next(ctx):
     if len(musicnow) - len(user) >= 2:
         for i in range(len(musicnow) - len(user) - 1):
             del musicnow[0]
-    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
-    FFMPEG_OPTIONS = {
-        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-        "options": "-vn",
-    }
+
     if len(user) >= 1:
         if not vc.is_playing():
             del musicnow[0]
@@ -104,40 +94,31 @@ def play_next(ctx):
             del musictitle[0]
             del song_queue[0]
             vc.play(
-                discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS),
+                discord.FFmpegPCMAudio(URL, **document.FFMPEG_OPTIONS),
                 after=lambda e: play_next(ctx),
             )
 
 
 def again(ctx, url):
     global number
-    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
-    FFMPEG_OPTIONS = {
-        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-        "options": "-vn",
-    }
+
     if number:
-        with YoutubeDL(YDL_OPTIONS) as ydl:
+        with YoutubeDL(document.YDL_OPTIONS) as ydl:
             info = ydl.extract_info(url, download=False)
         URL = info["formats"][0]["url"]
         if not vc.is_playing():
             vc.play(
-                FFmpegPCMAudio(URL, **FFMPEG_OPTIONS), after=lambda e: again(ctx, url)
+                FFmpegPCMAudio(URL, **document.FFMPEG_OPTIONS),
+                after=lambda e: again(ctx, url),
             )
 
 
 def URLPLAY(url):
-    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
-    FFMPEG_OPTIONS = {
-        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-        "options": "-vn",
-    }
-
     if not vc.is_playing():
-        with YoutubeDL(YDL_OPTIONS) as ydl:
+        with YoutubeDL(document.YDL_OPTIONS) as ydl:
             info = ydl.extract_info(url, download=False)
         URL = info["formats"][0]["url"]
-        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
+        vc.play(FFmpegPCMAudio(URL, **document.FFMPEG_OPTIONS))
         client.loop.create_task(subtitle_song(ctx, URL))
 
 
@@ -209,11 +190,6 @@ async def 목록초기화(ctx):
 
 @bot.command()
 async def 목록재생(ctx):
-    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
-    FFMPEG_OPTIONS = {
-        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-        "options": "-vn",
-    }
 
     if len(user) == 0:
         await ctx.send("아직 아무노래도 등록하지 않았어요.")
@@ -456,12 +432,6 @@ async def 재생(ctx, *, msg):
         options.add_argument("headless")
 
         global entireText
-        # 기본설정
-        YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
-        FFMPEG_OPTIONS = {
-            "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-            "options": "-vn",
-        }
 
         # chromedriver와 셀레니움을 활용하여 유튜브에서 영상 제목과 링크 등을 가져오는 코드
         # Heroku server
@@ -483,7 +453,7 @@ async def 재생(ctx, *, msg):
         driver.quit()
 
         # 음악 재생부분
-        with YoutubeDL(YDL_OPTIONS) as ydl:
+        with YoutubeDL(document.YDL_OPTIONS) as ydl:
             info = ydl.extract_info(url, download=False)
         URL = info["formats"][0]["url"]
         await ctx.send(
@@ -493,7 +463,7 @@ async def 재생(ctx, *, msg):
                 color=0x00FF00,
             )
         )
-        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
+        vc.play(FFmpegPCMAudio(URL, **document.FFMPEG_OPTIONS))
     else:
         user.append(msg)
         result, URLTEST = title(msg)
@@ -509,12 +479,6 @@ async def 멜론차트(ctx):
         options.add_argument("headless")
 
         global entireText
-        # 기본설정
-        YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
-        FFMPEG_OPTIONS = {
-            "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-            "options": "-vn",
-        }
 
         # chromedriver와 셀레니움을 활용하여 유튜브에서 영상 제목과 링크 등을 가져오는 코드
         # Heroku server
@@ -536,7 +500,7 @@ async def 멜론차트(ctx):
         driver.quit()
 
         # 음악 재생부분
-        with YoutubeDL(YDL_OPTIONS) as ydl:
+        with YoutubeDL(document.YDL_OPTIONS) as ydl:
             info = ydl.extract_info(url, download=False)
         URL = info["formats"][0]["url"]
         await ctx.send(
@@ -546,23 +510,18 @@ async def 멜론차트(ctx):
                 color=0x00FF00,
             )
         )
-        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
+        vc.play(FFmpegPCMAudio(URL, **document.FFMPEG_OPTIONS))
     else:
         await ctx.send("이미 노래가 재생 중이라 노래를 재생할 수 없어요!")
 
 
 def URLPLAY(url):
-    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
-    FFMPEG_OPTIONS = {
-        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-        "options": "-vn",
-    }
 
     if not vc.is_playing():
-        with YoutubeDL(YDL_OPTIONS) as ydl:
+        with YoutubeDL(document.YDL_OPTIONS) as ydl:
             info = ydl.extract_info(url, download=False)
         URL = info["formats"][0]["url"]
-        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
+        vc.play(FFmpegPCMAudio(URL, **document.FFMPEG_OPTIONS))
         client.loop.create_task(subtitle_song(ctx, URL))
 
 
@@ -586,12 +545,6 @@ async def 정밀검색(ctx, *, msg):
             await vc.move_to(ctx.message.author.voice.channel)
         except:
             await ctx.send("채널에 유저가 접속해있지 않네요..")
-
-    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
-    FFMPEG_OPTIONS = {
-        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-        "options": "-vn",
-    }
 
     # Heroku server
     # driver = load_chrome_driver()
@@ -634,11 +587,6 @@ async def 반복재생(ctx, *, msg):
     global entireText
     global number
     number = 1
-    YDL_OPTIONS = {"format": "bestaudio", "noplaylist": "True"}
-    FFMPEG_OPTIONS = {
-        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-        "options": "-vn",
-    }
 
     if len(musicnow) - len(user) >= 1:
         for i in range(len(musicnow) - len(user)):
@@ -744,7 +692,7 @@ async def 스킵(ctx):
                     color=0x00FF00,
                 )
             )
-            
+
         else:
             await ctx.send("노래가 이미 재생되고 있어요!")
     else:
