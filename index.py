@@ -14,11 +14,19 @@ from frame import document
 # 기본 명령어 앞에 !사용
 bot = commands.Bot(command_prefix="!")
 
-# Heroku server
-# token = os.environ.get("DISCORD_TOKEN")
+# 검색할때 크롬창 안보이게하기
+CHROMEOPTIONS = webdriver.ChromeOptions()
+CHROMEOPTIONS.add_argument("headless")
+
+# prfix
+PREFIX_YOUTUBEURL = "https://www.youtube.com/results?search_query="
+
+
+# Heroku server TOKEN
+# TOKEN = os.environ.get("DISCORD_TOKEN")
 
 # local dev
-token = Token.TOKEN
+TOKEN = Token.TOKEN
 
 
 user = []  # 유저가 입력한 노래정보
@@ -36,9 +44,6 @@ number = 1
 def title(msg):
     global music
 
-    options = webdriver.ChromeOptions()
-    options.add_argument("headless")
-
     # Heroku server
     # driver = load_chrome_driver()
 
@@ -46,7 +51,7 @@ def title(msg):
     chromedriver_dir = r"chromedriver.exe"
     driver = webdriver.Chrome(chromedriver_dir, options=options)
 
-    driver.get("https://www.youtube.com/results?search_query=" + msg + "+lyrics")
+    driver.get(PREFIX_YOUTUBEURL + msg + "+lyrics")
     source = driver.page_source
     bs = bs4.BeautifulSoup(source, "lxml")
     entire = bs.find_all("a", {"id": "video-title"})
@@ -256,15 +261,9 @@ async def 즐겨찾기추가(ctx, *, msg):
 
     for i in range(len(userFlist)):
         if userFlist[i][0] == str(ctx.message.author.name):
-
-            options = webdriver.ChromeOptions()
-            options.add_argument("headless")
-
             chromedriver_dir = r"D:\Discord_Bot\chromedriver.exe"
             driver = webdriver.Chrome(chromedriver_dir, options=options)
-            driver.get(
-                "https://www.youtube.com/results?search_query=" + msg + "+lyrics"
-            )
+            driver.get(PREFIX_YOUTUBEURL + msg + "+lyrics")
             source = driver.page_source
             bs = bs4.BeautifulSoup(source, "lxml")
             entire = bs.find_all("a", {"id": "video-title"})
@@ -301,10 +300,7 @@ async def 즐겨찾기삭제(ctx, *, number):
 
 
 def load_chrome_driver():
-
-    options = webdriver.ChromeOptions()
-
-    options.binary_location = os.getenv("GOOGLE_CHROME_BIN")
+    CHROMEOPTIONS.binary_location = os.getenv("GOOGLE_CHROME_BIN")
 
     options.add_argument("--headless")
     # options.add_argument('--disable-gpu')
@@ -427,21 +423,17 @@ async def url(ctx, *, url):
 @bot.command()
 async def 재생(ctx, *, msg):
     if not vc.is_playing():
-        # 검색할때 크롬창 안보이게하기
-        options = webdriver.ChromeOptions()
-        options.add_argument("headless")
-
         global entireText
 
-        # chromedriver와 셀레니움을 활용하여 유튜브에서 영상 제목과 링크 등을 가져오는 코드
         # Heroku server
         # driver = load_chrome_driver()
 
         # local dev
         chromedriver_dir = r"chromedriver.exe"
-        driver = webdriver.Chrome(chromedriver_dir, options=options)
+        driver = webdriver.Chrome(chromedriver_dir, options=CHROMEOPTIONS)
 
-        driver.get("https://www.youtube.com/results?search_query=" + msg + "+lyrics")
+        # chromedriver와 셀레니움을 활용하여 유튜브에서 영상 제목과 링크 등을 가져오는 코드
+        driver.get(PREFIX_YOUTUBEURL + msg + "+lyrics")
         source = driver.page_source
         bs = bs4.BeautifulSoup(source, "lxml")
         entire = bs.find_all("a", {"id": "video-title"})
@@ -474,9 +466,6 @@ async def 재생(ctx, *, msg):
 @bot.command()
 async def 멜론차트(ctx):
     if not vc.is_playing():
-        # 검색할때 크롬창 안보이게하기
-        options = webdriver.ChromeOptions()
-        options.add_argument("headless")
 
         global entireText
 
@@ -488,7 +477,7 @@ async def 멜론차트(ctx):
         chromedriver_dir = r"chromedriver.exe"
         driver = webdriver.Chrome(chromedriver_dir, options=options)
 
-        driver.get("https://www.youtube.com/results?search_query=멜론차트")
+        driver.get(PREFIX_YOUTUBEURL + "멜론차트")
         source = driver.page_source
         bs = bs4.BeautifulSoup(source, "lxml")
         entire = bs.find_all("a", {"id": "video-title"})
@@ -527,9 +516,6 @@ def URLPLAY(url):
 
 @bot.command()
 async def 정밀검색(ctx, *, msg):
-    # 검색할때 크롬창 안보이게하기
-    options = webdriver.ChromeOptions()
-    options.add_argument("headless")
 
     Text = ""
     # global Text
@@ -553,7 +539,7 @@ async def 정밀검색(ctx, *, msg):
     chromedriver_dir = r"chromedriver.exe"
     driver = webdriver.Chrome(chromedriver_dir, options=options)
 
-    driver.get("https://www.youtube.com/results?search_query=" + msg)
+    driver.get(PREFIX_YOUTUBEURL + msg)
     source = driver.page_source
     bs = bs4.BeautifulSoup(source, "lxml")
     entire = bs.find_all("a", {"id": "video-title"})
@@ -596,14 +582,10 @@ async def 반복재생(ctx, *, msg):
     # driver = load_chrome_driver()
 
     # local dev
-    # , options=options 생략 왜인지모름
-    # 검색할때 크롬창 안보이게하기
-    # options = webdriver.ChromeOptions()
-    # options.add_argument("headless")
     chromedriver_dir = r"chromedriver.exe"
-    driver = webdriver.Chrome(chromedriver_dir)
+    driver = webdriver.Chrome(chromedriver_dir, options=CHROMEOPTIONS)
 
-    driver.get("https://www.youtube.com/results?search_query=" + msg + "+lyrics")
+    driver.get(PREFIX_YOUTUBEURL + msg + "+lyrics")
     source = driver.page_source
     bs = bs4.BeautifulSoup(source, "lxml")
     entire = bs.find_all("a", {"id": "video-title"})
@@ -730,4 +712,4 @@ async def 명령어(ctx):
     )
 
 
-bot.run(token)
+bot.run(TOKEN)
