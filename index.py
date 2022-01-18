@@ -14,7 +14,7 @@ from frame import document
 # 기본 명령어 앞에 !사용
 bot = commands.Bot(command_prefix="!")
 
-# 검색할때 크롬창 안보이게하기
+# [local] 검색할때 크롬창 안보이게하기
 CHROMEOPTIONS = webdriver.ChromeOptions()
 CHROMEOPTIONS.add_argument("headless")
 
@@ -24,7 +24,7 @@ PREFIX_YOUTUBEURL = "https://www.youtube.com/results?search_query="
 # Heroku server TOKEN
 # TOKEN = os.environ.get("DISCORD_TOKEN")
 
-# local dev
+# [local]
 TOKEN = Token.TOKEN
 
 
@@ -34,7 +34,7 @@ song_queue = []  # 가공된 정보의 노래 링크
 musicnow = []  # 현재 출력되는 노래배열
 
 userF = []  # 유저 정보 저장 배열
-userFlist = []  # 유저 개닝 노래 저장 배열
+userFlist = []  # 유저 개인 노래 저장 배열
 allplaylist = []  # 플레이리스트 배열
 
 number = 1
@@ -48,7 +48,7 @@ def title(msg):
 
     # local dev
     chromedriver_dir = r"chromedriver.exe"
-    driver = webdriver.Chrome(chromedriver_dir, options=options)
+    driver = webdriver.Chrome(chromedriver_dir, options=CHROMEOPTIONS)
 
     driver.get(PREFIX_YOUTUBEURL + msg + "+lyrics")
     source = driver.page_source
@@ -115,15 +115,6 @@ def again(ctx, url):
                 FFmpegPCMAudio(URL, **document.FFMPEG_OPTIONS),
                 after=lambda e: again(ctx, url),
             )
-
-
-def URLPLAY(url):
-    if not vc.is_playing():
-        with YoutubeDL(document.YDL_OPTIONS) as ydl:
-            info = ydl.extract_info(url, download=False)
-        URL = info["formats"][0]["url"]
-        vc.play(FFmpegPCMAudio(URL, **document.FFMPEG_OPTIONS))
-        client.loop.create_task(subtitle_song(ctx, URL))
 
 
 @bot.command()
@@ -194,7 +185,6 @@ async def 목록초기화(ctx):
 
 @bot.command()
 async def 목록재생(ctx):
-
     if len(user) == 0:
         await ctx.send("아직 아무노래도 등록하지 않았어요.")
     else:
@@ -261,7 +251,7 @@ async def 즐겨찾기추가(ctx, *, msg):
     for i in range(len(userFlist)):
         if userFlist[i][0] == str(ctx.message.author.name):
             chromedriver_dir = r"D:\Discord_Bot\chromedriver.exe"
-            driver = webdriver.Chrome(chromedriver_dir, options=options)
+            driver = webdriver.Chrome(chromedriver_dir, options=CHROMEOPTIONS)
             driver.get(PREFIX_YOUTUBEURL + msg + "+lyrics")
             source = driver.page_source
             bs = bs4.BeautifulSoup(source, "lxml")
@@ -354,11 +344,6 @@ async def on_reaction_add(reaction, users):
                             await reaction.message.channel.send(
                                 userFlist[i][j] + "를 재생목록에 추가했어요!"
                             )
-            elif str(reaction.emoji) == "\U0001F4DD":
-                await reaction.message.channel.send(
-                    "플레이리스트가 나오면 생길 기능이랍니다. 추후에 올릴 영상을 기다려주세요!"
-                )
-
             # 정밀검색추가부분
             elif str(reaction.emoji) == "\u0031\uFE0F\u20E3":
                 URLPLAY(rinklist[0])
@@ -399,16 +384,11 @@ async def out(ctx):
 
 @bot.command()
 async def url(ctx, *, url):
-    YDL_OPRIONS = {"format": "bestaudio", "noplaylist": "True"}
-    FFMPEG_OPRIONS = {
-        "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5"
-    }
-
     if not vc.is_playing():
-        with YoutubeDL(YDL_OPRIONS) as tdl:
+        with YoutubeDL(document.YDL_OPTIONS) as tdl:
             info = tdl.extract_info(url, download=False)
         URL = info["formats"][0]["url"]
-        vc.play(FFmpegPCMAudio(URL, **FFMPEG_OPRIONS))
+        vc.play(FFmpegPCMAudio(URL, **document.FFMPEG_OPRIONS))
         await ctx.send(
             embed=discord.Embed(
                 title="노래재생", description="현재" + url + "을(를) 재생하고있습니다", color=0x0000CD
@@ -467,7 +447,6 @@ async def 재생(ctx, *, msg):
 @bot.command()
 async def 멜론차트(ctx):
     if not vc.is_playing():
-
         global entireText
 
         # chromedriver와 셀레니움을 활용하여 유튜브에서 영상 제목과 링크 등을 가져오는 코드
@@ -476,7 +455,7 @@ async def 멜론차트(ctx):
 
         # local dev
         chromedriver_dir = r"chromedriver.exe"
-        driver = webdriver.Chrome(chromedriver_dir, options=options)
+        driver = webdriver.Chrome(chromedriver_dir, options=CHROMEOPTIONS)
 
         driver.get(PREFIX_YOUTUBEURL + "멜론차트")
         source = driver.page_source
@@ -505,8 +484,8 @@ async def 멜론차트(ctx):
         await ctx.send("이미 노래가 재생 중이라 노래를 재생할 수 없어요!")
 
 
+# 정밀검색
 def URLPLAY(url):
-
     if not vc.is_playing():
         with YoutubeDL(document.YDL_OPTIONS) as ydl:
             info = ydl.extract_info(url, download=False)
@@ -515,9 +494,9 @@ def URLPLAY(url):
         client.loop.create_task(subtitle_song(ctx, URL))
 
 
+# 정밀검색
 @bot.command()
-async def 정밀검색(ctx, *, msg):
-
+async def a(ctx, *, msg):
     Text = ""
     # global Text
     global rinklist
@@ -538,7 +517,7 @@ async def 정밀검색(ctx, *, msg):
 
     # local dev
     chromedriver_dir = r"chromedriver.exe"
-    driver = webdriver.Chrome(chromedriver_dir, options=options)
+    driver = webdriver.Chrome(chromedriver_dir, options=CHROMEOPTIONS)
 
     driver.get(PREFIX_YOUTUBEURL + msg)
     source = driver.page_source
@@ -549,7 +528,16 @@ async def 정밀검색(ctx, *, msg):
         entireText = entireNum.text.strip()  # 영상제목
         test1 = entireNum.get("href")  # 하이퍼링크
         rinklist[i] = "https://www.youtube.com" + test1
-        Text = Text + str(i + 1) + "번째 영상" + entireText + "\n링크 : " + rinklist[i]
+        Text = (
+            Text
+            + str(i + 1)
+            + "번째 영상"
+            + entireText
+            + "\n"
+            + "링크 : "
+            + rinklist[i]
+            + "\n"
+        )
 
     await ctx.send(
         embed=discord.Embed(
@@ -560,8 +548,79 @@ async def 정밀검색(ctx, *, msg):
 
 
 @bot.command()
-async def 반복재생(ctx, *, msg):
+async def q1(ctx):
+    global rinklist
+    print(rinklist)
 
+    if rinklist is None:
+        await ctx.send(
+            embed=discord.Embed(
+                title="검색하지 않았습니다 !p [노래]를 먼저 진행해주세요",
+                description=Text.strip(),
+                color=0x00FF00,
+            )
+        )
+    else:
+        URLPLAY(rinklist[0])
+        rinklist = None
+
+
+@bot.command()
+async def q2(ctx):
+    global rinklist
+    print(rinklist)
+
+    if rinklist is None:
+        await ctx.send(
+            embed=discord.Embed(
+                title="검색하지 않았습니다 !p [노래]를 먼저 진행해주세요",
+                description=Text.strip(),
+                color=0x00FF00,
+            )
+        )
+    else:
+        URLPLAY(rinklist[1])
+        rinklist = [0, 0, 0, 0, 0]
+
+
+@bot.command()
+async def q3(ctx):
+    global rinklist
+    print(rinklist)
+
+    if rinklist is None:
+        await ctx.send(
+            embed=discord.Embed(
+                title="검색하지 않았습니다 !p [노래]를 먼저 진행해주세요",
+                description=Text.strip(),
+                color=0x00FF00,
+            )
+        )
+    else:
+        URLPLAY(rinklist[2])
+        rinklist = [0, 0, 0, 0, 0]
+
+
+@bot.command()
+async def q4(ctx):
+    global rinklist
+    print(rinklist)
+
+    if rinklist is None:
+        await ctx.send(
+            embed=discord.Embed(
+                title="검색하지 않았습니다 !p [노래]를 먼저 진행해주세요",
+                description=Text.strip(),
+                color=0x00FF00,
+            )
+        )
+    else:
+        URLPLAY(rinklist[3])
+        rinklist = [0, 0, 0, 0, 0]
+
+
+@bot.command()
+async def 반복재생(ctx, *, msg):
     try:
         global vc
         vc = await ctx.message.author.voice.channel.connect()
